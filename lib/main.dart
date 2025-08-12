@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:reposearch/app_localizations.dart';
+import 'package:reposearch/reposearch/data/datasources/local/repo_db.dart';
 import 'package:reposearch/reposearch/data/repositories/github_api.dart';
 import 'package:reposearch/reposearch/domain/repositories/github_api_interface.dart';
 import 'package:reposearch/reposearch/domain/services/reposearch_service.dart';
@@ -11,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 GetIt getIt = GetIt.instance;
+late RepoDB repoDB;
 
 void _setupServices() {
   getIt.registerSingleton<GithubApiInterface>(GithubApi());
@@ -22,6 +24,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await dotenv.load(fileName: "assets/.env");
+
+  repoDB = await RepoDB.instance.init();
 
   _setupServices();
 

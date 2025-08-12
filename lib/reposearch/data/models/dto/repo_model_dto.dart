@@ -4,6 +4,10 @@ class RepoModelDTO {
   final String fullName;
   final String description;
   final String htmlUrl;
+  final String avatarUrl;
+  final String createdAt;
+  final String updatedAt;
+  final int forksCount;
 
   RepoModelDTO({
     required this.id,
@@ -11,6 +15,10 @@ class RepoModelDTO {
     required this.fullName,
     required this.description,
     required this.htmlUrl,
+    required this.avatarUrl,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.forksCount,
   });
 
   factory RepoModelDTO.fromJson(Map<String, dynamic> json) {
@@ -20,6 +28,10 @@ class RepoModelDTO {
       fullName: json['full_name'] ?? '',
       description: json['description'] ?? '',
       htmlUrl: json['html_url'] ?? '',
+      avatarUrl: json['owner']?['avatar_url'] ?? '',
+      createdAt: json['created_at'] ?? '',
+      updatedAt: json['updated_at'] ?? '',
+      forksCount: json['forks_count'] ?? 0,
     );
   }
 
@@ -30,6 +42,10 @@ class RepoModelDTO {
       'full_name': fullName,
       'description': description,
       'html_url': htmlUrl,
+      'avatar_url': avatarUrl,
+      'created_at': createdAt,
+      'updated_at': updatedAt,
+      'forks_count': forksCount,
     };
   }
 
@@ -40,6 +56,10 @@ class RepoModelDTO {
       fullName: m['full_name'] ?? '',
       description: m['description'] ?? '',
       htmlUrl: m['html_url'] ?? '',
+      avatarUrl: m['avatar_url'] ?? '',
+      createdAt: m['created_at'] ?? '',
+      updatedAt: m['updated_at'] ?? '',
+      forksCount: m['forks_count'] ?? 0,
     );
   }
 }

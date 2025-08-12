@@ -24,7 +24,8 @@ abstract class RepoSearchStoreClass with Store {
     error = null;
 
     try {
-      final res = await getIt<ReposearchService>().searchRepos(query);
+      final res = await getIt<ReposearchService>().searchAndCache(query);
+
       repos = ObservableList.of(res);
     } catch (e) {
       error = e.toString();
@@ -40,7 +41,7 @@ abstract class RepoSearchStoreClass with Store {
     error = null;
 
     try {
-      final res = await getIt<ReposearchService>().searchRepos('');
+      final res = await getIt<ReposearchService>().loadCached();
       repos = ObservableList.of(res);
     } catch (e) {
       error = e.toString();
