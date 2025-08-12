@@ -10,13 +10,15 @@ import 'package:reposearch/reposearch/domain/stores/repo_search_store.dart';
 import 'package:reposearch/reposearch/presentation/search_repo_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+//import 'package:reposearch/test/mock_repo_search_service.dart';
+//import 'package:flutter_test/flutter_test.dart';
 
 GetIt getIt = GetIt.instance;
 late RepoDB repoDB;
 
 void _setupServices() {
   getIt.registerSingleton<GithubApiInterface>(GithubApi());
-  getIt.registerSingleton<ReposearchService>(ReposearchService());
+  getIt.registerSingleton<RepoSearchService>(RepoSearchService());
   getIt.registerSingleton<RepoSearchStore>(RepoSearchStore());
 }
 
@@ -30,6 +32,56 @@ void main() async {
   _setupServices();
 
   runApp(const MyApp());
+
+  /*late RepoSearchStore store;
+  late MockRepoSearchService mockService;
+
+  setUp(() {
+    mockService = MockRepoSearchService();
+    getIt.unregister<RepoSearchService>();
+    getIt.registerSingleton<RepoSearchService>(mockService);
+    store = RepoSearchStore();
+  });
+
+  test('search() calls service and updates repos', () async {
+    await store.search('flutter');
+
+    expect(mockService.searchCalled, true);
+    expect(store.repos.length, 1);
+    expect(store.repos.first.name, 'Test Repo');
+    expect(store.loading, false);
+    expect(store.error, isNull);
+  });
+
+  test('loadCache() calls service and updates repos', () async {
+    await store.loadCache();
+
+    expect(mockService.loadCacheCalled, true);
+    expect(store.repos.length, 1);
+    expect(store.repos.first.name, 'Cached Repo');
+    expect(store.loading, false);
+    expect(store.error, isNull);
+  });
+
+  test('search() sets error when service throws', () async {
+    mockService.throwOnSearch = true;
+
+    await store.search('flutter');
+
+    expect(store.repos.isEmpty, true);
+    expect(store.loading, false);
+    expect(store.error, contains('Search failed'));
+  });
+
+  test('loadCache() sets error when service throws', () async {
+    mockService.throwOnLoadCache = true;
+
+    await store.loadCache();
+
+    expect(store.repos.isEmpty, true);
+    expect(store.loading, false);
+    expect(store.error, contains('Cache load failed'));
+  });*/
 }
 
 class MyApp extends StatefulWidget {
