@@ -1,3 +1,10 @@
 {
-    "common_ok": "OK"
+    "search_repo_screen_title": "Repo Search",
+    "search_repo_screen_search": "Search GitHub repos",
+    "search_repo_screen_search_button": "Search",
+    "search_repo_screen_no_result": "No result",
+    "repo_tile_widget_forks": "Forks: ",
+    "repo_tile_widget_updated": "Updated: ",
+    "repo_tile_widget_created": "Created: ",
+    "repo_tile_widget_close": "Bezár"
 }

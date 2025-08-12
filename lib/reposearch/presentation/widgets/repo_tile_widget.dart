@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reposearch/language_constants.dart';
 import 'package:reposearch/reposearch/data/models/dto/repo_model_dto.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -43,28 +44,33 @@ class RepoTile extends StatelessWidget {
                     const SizedBox(
                       height: 25,
                     ),
+                    GestureDetector(
+                      onTap: openUrl,
+                      child: Text(
+                        repo.htmlUrl,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
                     Text(repo.description),
                     const SizedBox(
                       height: 5,
                     ),
-                    GestureDetector(
-                      onTap: openUrl,
-                      child: Text('URL: ' + repo.htmlUrl),
+                    Text(
+                      '${getTranslated(context, "repo_tile_widget_forks")} ${repo.forksCount}',
                     ),
                     const SizedBox(
                       height: 5,
                     ),
                     Text(
-                      'Forks: ${repo.forksCount}',
-                    ),
+                        '${getTranslated(context, "repo_tile_widget_created")} ${repo.createdAt}'),
                     const SizedBox(
                       height: 5,
                     ),
-                    Text('Created: ${repo.createdAt}'),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Text('Updated: ${repo.updatedAt}'),
+                    Text(
+                        '${getTranslated(context, "repo_tile_widget_updated")} ${repo.updatedAt}'),
                   ],
                 ),
                 actions: [

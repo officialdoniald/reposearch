@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reposearch/language_constants.dart';
 import 'package:reposearch/main.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:reposearch/reposearch/domain/stores/repo_search_store.dart';
@@ -25,7 +26,7 @@ class _SearchRepoScreenState extends State<SearchRepoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Repo Search'),
+        title: Text(getTranslated(context, "search_repo_screen_title")),
         actions: [
           Observer(
             builder: (_) => IconButton(
@@ -46,15 +47,17 @@ class _SearchRepoScreenState extends State<SearchRepoScreen> {
             Expanded(
               child: TextField(
                 controller: ctrl,
-                decoration:
-                    const InputDecoration(hintText: 'Search GitHub repos'),
+                decoration: InputDecoration(
+                    hintText:
+                        getTranslated(context, "search_repo_screen_search")),
                 onSubmitted: (v) => getIt<RepoSearchStore>().search(v),
               ),
             ),
             const SizedBox(width: 8),
             ElevatedButton(
               onPressed: () => getIt<RepoSearchStore>().search(ctrl.text),
-              child: const Text('Search'),
+              child: Text(
+                  getTranslated(context, "search_repo_screen_search_button")),
             )
           ]),
           const SizedBox(height: 12),
@@ -68,7 +71,9 @@ class _SearchRepoScreenState extends State<SearchRepoScreen> {
                     child: Text('Error: ${getIt<RepoSearchStore>().error}'));
               }
               if (getIt<RepoSearchStore>().repos.isEmpty) {
-                return const Center(child: Text('No results'));
+                return Center(
+                    child: Text(getTranslated(
+                        context, "search_repo_screen_no_result")));
               }
               return ListView.builder(
                 itemCount: getIt<RepoSearchStore>().repos.length,

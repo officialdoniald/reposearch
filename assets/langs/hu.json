@@ -1,3 +1,10 @@
 {
-    "common_ok": "OK"
+    "search_repo_screen_title": "Repo kereső",
+    "search_repo_screen_search": "Keress GitHub repo-t!",
+    "search_repo_screen_search_button": "Keresés",
+    "search_repo_screen_no_result": "Nincs találat",
+    "repo_tile_widget_forks": "Forks: ",
+    "repo_tile_widget_updated": "Módosítva: ",
+    "repo_tile_widget_created": "Létrehozva: ",
+    "repo_tile_widget_close": "Bezár"
 }
