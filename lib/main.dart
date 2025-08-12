@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 import 'package:reposearch/app_localizations.dart';
 import 'package:reposearch/reposearch/data/datasources/local/repo_db.dart';
@@ -8,6 +9,7 @@ import 'package:reposearch/reposearch/domain/repositories/github_api_interface.d
 import 'package:reposearch/reposearch/domain/services/reposearch_service.dart';
 import 'package:reposearch/reposearch/domain/stores/repo_search_store.dart';
 import 'package:reposearch/reposearch/presentation/search_repo_screen.dart';
+import 'package:reposearch/theme/theme_store.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 //import 'package:reposearch/test/mock_repo_search_service.dart';
@@ -17,6 +19,7 @@ GetIt getIt = GetIt.instance;
 late RepoDB repoDB;
 
 void _setupServices() {
+  getIt.registerSingleton<ThemeStore>(ThemeStore());
   getIt.registerSingleton<GithubApiInterface>(GithubApi());
   getIt.registerSingleton<RepoSearchService>(RepoSearchService());
   getIt.registerSingleton<RepoSearchStore>(RepoSearchStore());
@@ -128,33 +131,35 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      supportedLocales: const [
-        Locale("en", "US"),
-        Locale("hu", "HU"),
-      ],
-      locale: _locale,
-      localizationsDelegates: const [
-        AppLocalization.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      localeResolutionCallback: (locale, supportedLocales) {
-        for (var supportedLocale in supportedLocales) {
-          if (supportedLocale.languageCode == locale!.languageCode &&
-              supportedLocale.countryCode == locale.countryCode) {
-            return supportedLocale;
+    return Observer(
+      builder: (_) => MaterialApp(
+        title: 'Flutter Demo',
+        supportedLocales: const [
+          Locale("en", "US"),
+          Locale("hu", "HU"),
+        ],
+        locale: _locale,
+        localizationsDelegates: const [
+          AppLocalization.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        localeResolutionCallback: (locale, supportedLocales) {
+          for (var supportedLocale in supportedLocales) {
+            if (supportedLocale.languageCode == locale!.languageCode &&
+                supportedLocale.countryCode == locale.countryCode) {
+              return supportedLocale;
+            }
           }
-        }
-        return supportedLocales.first;
-      },
-      home: const SearchRepoScreen(),
+          return supportedLocales.first;
+        },
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData.light(),
+        darkTheme: ThemeData.dark(),
+        themeMode: getIt<ThemeStore>().themeMode,
+        home: const SearchRepoScreen(),
+      ),
     );
   }
 }

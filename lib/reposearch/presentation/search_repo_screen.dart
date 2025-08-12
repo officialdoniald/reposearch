@@ -3,6 +3,7 @@ import 'package:reposearch/main.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:reposearch/reposearch/domain/stores/repo_search_store.dart';
 import 'package:reposearch/reposearch/presentation/widgets/repo_tile_widget.dart';
+import 'package:reposearch/theme/theme_store.dart';
 
 class SearchRepoScreen extends StatefulWidget {
   const SearchRepoScreen({super.key});
@@ -25,6 +26,18 @@ class _SearchRepoScreenState extends State<SearchRepoScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Repo Search'),
+        actions: [
+          Observer(
+            builder: (_) => IconButton(
+              icon: Icon(
+                getIt<ThemeStore>().themeMode == ThemeMode.light
+                    ? Icons.dark_mode
+                    : Icons.light_mode,
+              ),
+              onPressed: getIt<ThemeStore>().toggleTheme,
+            ),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
